@@ -1,6 +1,7 @@
 package zheng.craig.hudlu;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     public static class CZViewHolder extends RecyclerView.ViewHolder {
         public TextView czTextView;
 
-        public CZViewHolder(TextView view) {
+        public CZViewHolder(CardView view) {
             super(view);
             czTextView = (TextView) view.findViewById(R.id.cz_text_item);
         }
@@ -32,7 +33,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
         View v = LayoutInflater.from(parent.getContext())
                                     .inflate(R.layout.cz_text_view, parent, false);
 
-        return new CZViewHolder((TextView)v);
+        return new CZViewHolder((CardView)v);
     }
     
     @Override

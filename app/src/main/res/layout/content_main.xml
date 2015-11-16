@@ -10,10 +10,6 @@
     tools:showIn="@layout/activity_main" tools:context=".MainActivity"
     android:background="#232a31">
 
-    <TextView android:text="Hello Hudl!" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:scrollbars="vertical"
