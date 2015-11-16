@@ -18,7 +18,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
 
         public CZViewHolder(TextView view) {
             super(view);
-            czTextView = view;
+            czTextView = (TextView) view.findViewById(R.id.cz_text_item);
         }
     }
     
