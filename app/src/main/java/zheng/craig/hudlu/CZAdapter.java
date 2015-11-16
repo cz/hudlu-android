@@ -13,6 +13,7 @@ import android.widget.TextView;
  */
 public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     private String[] czDataset;
+    private OnAdapterInteractionListener myListener;
     
     public static class CZViewHolder extends RecyclerView.ViewHolder {
         public TextView czTextView;
@@ -22,9 +23,14 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
             czTextView = (TextView) view.findViewById(R.id.cz_text_item);
         }
     }
+
+    public interface OnAdapterInteractionListener {
+        void onItemClicked(View view, int position);
+    }
     
     public CZAdapter(Context myContext, String[] myDataset) {
         czDataset = myDataset;
+        myListener = (OnAdapterInteractionListener) myContext;
     }
 
     @Override
@@ -37,8 +43,15 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     }
     
     @Override
-    public void onBindViewHolder(CZViewHolder holder, int position) {
+    public void onBindViewHolder(CZViewHolder holder, final int position) {
         holder.czTextView.setText(czDataset[position]);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myListener.onItemClicked(v, position);
+            }
+        });
     }
 
     @Override

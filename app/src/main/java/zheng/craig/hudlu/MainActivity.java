@@ -65,4 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    protected void onItemClicked(View view, int position) {
+        Snackbar.make(view, myDataset[position], Snackbar.LENGTH_SHORT).show();
+    }
 }
