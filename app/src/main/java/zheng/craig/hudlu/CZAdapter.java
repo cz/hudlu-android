@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import zheng.craig.hudlu.models.MashableNewsItem;
+
 /**
  * Created by cz on 11/15/15.
  */
 public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
-    private String[] czDataset;
+    private List<MashableNewsItem> czDataset;
     private OnAdapterInteractionListener myListener;
     
     public static class CZViewHolder extends RecyclerView.ViewHolder {
@@ -28,7 +32,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
         void onItemClicked(View view, int position);
     }
     
-    public CZAdapter(Context myContext, String[] myDataset) {
+    public CZAdapter(Context myContext, List<MashableNewsItem> myDataset) {
         czDataset = myDataset;
         myListener = (OnAdapterInteractionListener) myContext;
     }
@@ -44,7 +48,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     
     @Override
     public void onBindViewHolder(CZViewHolder holder, final int position) {
-        holder.czTextView.setText(czDataset[position]);
+        holder.czTextView.setText(czDataset.get(0).title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +60,6 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
 
     @Override
     public int getItemCount() {
-        return czDataset.length;
+        return czDataset.size();
     }
 }
