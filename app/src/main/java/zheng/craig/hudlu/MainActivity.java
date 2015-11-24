@@ -24,13 +24,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import zheng.craig.hudlu.models.MashableNews;
+import zheng.craig.hudlu.models.MashableNewsItem;
 
 public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapterInteractionListener {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private final String[] myDataset = new String[]{"Adam Gucwa", "Alberto Chamorro", "Chanse Strode", "Craig Zheng", "David Bohner", "Eric Clymer", "Jessica Hoffman", "Jon Evans", "Jordan Degner", "Mitchel Pigsley", "Peter Yasi", "Seth Prauner", "Sue Yi", "Zach Ramaekers", "Mike Isman", "Josh Cox"};
+    private final List<MashableNewsItem> myDataset = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
     }
 
     public void onItemClicked(View view, int position) {
-        Snackbar.make(view, myDataset[position], Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, myDataset.get(position).author, Snackbar.LENGTH_SHORT).show();
     }
 
     public void fetchLatestNews() {
@@ -99,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
                         @Override
                         public void onResponse(String response) {
                             MashableNews news = new Gson().fromJson(response, MashableNews.class);
-                            Log.d("News fetching", news.newsItems.get(0).title);
+                            myDataset.addAll(news.newsItems);
+                            mAdapter.notifyDataSetChanged();
                         }
                     },
                     new Response.ErrorListener() {

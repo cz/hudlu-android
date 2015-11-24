@@ -48,7 +48,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     
     @Override
     public void onBindViewHolder(CZViewHolder holder, final int position) {
-        holder.czTextView.setText(czDataset.get(0).title);
+        holder.czTextView.setText(czDataset.get(position).title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
