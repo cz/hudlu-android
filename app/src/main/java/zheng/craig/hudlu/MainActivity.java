@@ -1,6 +1,9 @@
 package zheng.craig.hudlu;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Context context = getApplicationContext();
+
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -59,6 +64,27 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
                         .setAction("Action", null).show();
             }
         });
+
+        // Show an alert for first-time users
+        SharedPreferences preferences = getSharedPreferences("HudlPrefs", Context.MODE_PRIVATE);
+        Boolean alertShown = preferences.getBoolean("alertShown", false);
+
+        if (alertShown == false) {
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle(context.getResources().getString(R.string.hello_alert_title));
+            alertDialog.setMessage(context.getResources().getString(R.string.hello_alert_body));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, context.getResources().getString(R.string.ok_text),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("alertShown", true);
+            editor.apply();
+        }
 
         fetchLatestNews();
     }
