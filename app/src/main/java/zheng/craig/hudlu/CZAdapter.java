@@ -29,15 +29,15 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     private RequestQueue mRequestQueue;
     
     public static class CZViewHolder extends RecyclerView.ViewHolder {
-        public ImageView CoverView;
-        public TextView TitleView;
-        public TextView AuthorView;
+        public ImageView coverView;
+        public TextView titleView;
+        public TextView authorView;
 
         public CZViewHolder(CardView view) {
             super(view);
-            CoverView = (ImageView) view.findViewById(R.id.item_image);
-            TitleView = (TextView) view.findViewById(R.id.item_title);
-            AuthorView = (TextView) view.findViewById(R.id.item_author);
+            coverView = (ImageView) view.findViewById(R.id.item_image);
+            titleView = (TextView) view.findViewById(R.id.item_title);
+            authorView = (TextView) view.findViewById(R.id.item_author);
         }
     }
 
@@ -64,15 +64,15 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     public void onBindViewHolder(final CZViewHolder holder, final int position) {
         MashableNewsItem currentItem = czDataset.get(position);
 
-        holder.TitleView.setText(currentItem.title);
-        holder.AuthorView.setText(currentItem.author);
+        holder.titleView.setText(currentItem.title);
+        holder.authorView.setText(currentItem.author);
 
         ImageRequest request = new ImageRequest(
                 currentItem.image,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
-                        holder.CoverView.setImageBitmap(bitmap);
+                        holder.coverView.setImageBitmap(bitmap);
                     }
                 }, 0, 0, null, null,
                 new Response.ErrorListener() {
