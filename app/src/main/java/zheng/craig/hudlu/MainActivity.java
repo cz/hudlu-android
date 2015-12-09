@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,15 +56,6 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
 
         mAdapter = new CZAdapter(this, myDataset);
         mRecyclerView.setAdapter(mAdapter);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         // Show an alert for first-time users
         SharedPreferences preferences = getSharedPreferences("HudlPrefs", Context.MODE_PRIVATE);
@@ -113,7 +105,19 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
     }
 
     public void onItemClicked(View view, int position) {
-        Snackbar.make(view, myDataset.get(position).author, Snackbar.LENGTH_SHORT).show();
+        if (view.getId() == R.id.favorite_button) {
+            MashableNewsItem item = myDataset.get(position);
+
+            if (!FavoriteUtil.isFavorite(this, item)) {
+                FavoriteUtil.addFavorite(this, item);
+            } else {
+                FavoriteUtil.removeFavorite(this, item);
+            }
+
+            mAdapter.notifyDataSetChanged();
+        } else {
+            Snackbar.make(view, myDataset.get(position).author, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     public void fetchLatestNews() {

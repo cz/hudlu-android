@@ -2,11 +2,13 @@ package zheng.craig.hudlu;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,17 +29,20 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
     private List<MashableNewsItem> czDataset;
     private OnAdapterInteractionListener myListener;
     private RequestQueue mRequestQueue;
+    private Context czContext;
     
     public static class CZViewHolder extends RecyclerView.ViewHolder {
         public ImageView coverView;
         public TextView titleView;
         public TextView authorView;
+        public Button faveButton;
 
         public CZViewHolder(CardView view) {
             super(view);
             coverView = (ImageView) view.findViewById(R.id.item_image);
             titleView = (TextView) view.findViewById(R.id.item_title);
             authorView = (TextView) view.findViewById(R.id.item_author);
+            faveButton = (Button) view.findViewById(R.id.favorite_button);
         }
     }
 
@@ -49,6 +54,7 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
         mRequestQueue = Volley.newRequestQueue(myContext);
         czDataset = myDataset;
         myListener = (OnAdapterInteractionListener) myContext;
+        czContext = myContext;
     }
 
     @Override
@@ -89,6 +95,21 @@ public class CZAdapter extends RecyclerView.Adapter<CZAdapter.CZViewHolder> {
                 myListener.onItemClicked(v, position);
             }
         });
+
+        holder.faveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myListener.onItemClicked(v, position);
+            }
+        });
+
+        if (FavoriteUtil.isFavorite(czContext, czDataset.get(position))) {
+            holder.faveButton.setBackgroundColor(0xFFFF6600);
+            holder.faveButton.setTextColor(Color.WHITE);
+        } else {
+            holder.faveButton.setBackgroundColor(Color.WHITE);
+            holder.faveButton.setTextColor(Color.BLACK);
+        }
     }
 
     @Override

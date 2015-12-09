@@ -27,10 +27,18 @@ public class FavoriteUtil {
     }
 
     public static void removeFavorite(Context context, MashableNewsItem newsItem) {
+        Realm realm = Realm.getInstance(context);
+        RealmQuery<Favorite> query = realm.where(Favorite.class).equalTo("link", newsItem.link);
+
+        realm.beginTransaction();
+        query.findFirst().removeFromRealm();
+        realm.commitTransaction();
     }
 
     public static boolean isFavorite(Context context, MashableNewsItem newsItem) {
-        return false;
+        Realm realm = Realm.getInstance(context);
+        RealmQuery<Favorite> query = realm.where(Favorite.class).equalTo("link", newsItem.link);
+        return query.count() > 0;
     }
 
     public static RealmResults<Favorite> getAllFavorites(Context context) {
