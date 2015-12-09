@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -97,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
     }
 
     public void onItemClicked(View view, int position) {
+        MashableNewsItem item = myDataset.get(position);
+
         if (view.getId() == R.id.favorite_button) {
-            MashableNewsItem item = myDataset.get(position);
 
             if (!FavoriteUtil.isFavorite(this, item)) {
                 FavoriteUtil.addFavorite(this, item);
@@ -108,7 +110,11 @@ public class MainActivity extends AppCompatActivity implements CZAdapter.OnAdapt
 
             mAdapter.notifyDataSetChanged();
         } else {
-            Snackbar.make(view, myDataset.get(position).author, Snackbar.LENGTH_SHORT).show();
+            Uri webpage = Uri.parse(item.link);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
         }
     }
 
