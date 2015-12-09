@@ -6,4 +6,5 @@
     <string name="hello_alert_title">Oh Hello</string>
     <string name="hello_alert_body">Welcome to Homework</string>
     <string name="button_text">Favorite</string>
+    <string name="title_activity_favorites">Favorites</string>
 </resources>
